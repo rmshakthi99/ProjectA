@@ -1,0 +1,19 @@
+﻿body {
+}
+dl {
+    margin-top: 0;
+    margin-bottom: 21px;
+    color:red;
+}
+dt, dd {
+    line-height: 1.42;
+    color:red;
+}
+dt {
+    font-weight: bold;
+    color:red;
+}
+dd{
+    margin-left:0;
+    color:red;
+}

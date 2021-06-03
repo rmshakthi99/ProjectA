@@ -1,0 +1,121 @@
+﻿@model PizzaMVCProject.Models.OrderSummary
+
+@{
+    ViewData["Title"] = "Summary";
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pizzerio</title>
+    
+
+    
+    <script type="text/javascript">
+        function showAlert() {
+        
+        var alert = confirm("Once Order placed cannot be cancelled.Are you sure you want to continue?");
+        
+            if (alert == true) {
+                var pizza = (document.getElementById("PizzaId").value);
+                var Cus = (document.getElementById("CustomerId").value);
+                var total = (document.getElementById("TotalAmount").value);         
+                window.location.href = "/Pizza/FinalOrder?PizzaId=" + pizza + "&CustomerId=" + Cus + "&TotalAmount=" + total;
+        }
+        
+      }
+    </script>
+    </head>
+<body>
+    
+        <section>
+            <div class="circle"></div>
+            <header>
+
+                <a href="#" class="logo"><img src="~/Images/logo.png" /></a>
+
+            </header>
+        </section>
+    
+    <div>
+        <h4>OrderSummary</h4>
+        <hr />
+        <dl class="row">
+            <form>
+                <input type="hidden" name="PizzaId" id="PizzaId" value="@Model.PizzaId">
+                <input type="hidden" name="CustomerId" id="CustomerId" value="@Model.CustomerId">
+                <input type="hidden" name="TotalAmount" id="TotalAmount" value="@Model.TotalAmount">
+
+            </form>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PizzaName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PizzaName)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CustomerId, new { @id = "CustomerId" })
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CustomerName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DeliveryAddress)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DeliveryAddress)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MobileNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MobileNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Crust)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Crust)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Toppings)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Toppings)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalAmount, new { @id = "Amount" })
+            </dd>
+           
+        </dl>
+    </div>
+    <div>
+
+        <input type="button" value="Place Order" onclick="showAlert()" class="btn btn-success" />
+        <input type="button" value="Back to Menu Page" onclick="location.href='@Url.Action("Menu","Pizza")'" class="btn btn-danger" />
+    </div>
+</body>
+    </html>
+

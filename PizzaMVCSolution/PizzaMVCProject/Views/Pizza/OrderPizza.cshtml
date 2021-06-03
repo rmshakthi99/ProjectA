@@ -1,0 +1,163 @@
+﻿@model PizzaMVCProject.Models.Customer
+
+@{
+    ViewData["Title"] = "OrderPizza";
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pizzerio</title>    
+</head>
+<body>
+    <section>
+        <div class="circle"></div>
+        <header>
+
+            <a href="#" class="logo"><img src="~/Images/logo.png" /></a>
+          
+        </header>
+
+        <h3>OrderPizza</h3>
+
+        <h4>Please enter the details!!</h4>
+        <hr />
+        <script type="text/javascript">
+            function PriceCalc() {
+                var qty = parseInt(document.getElementById("Quantity").value);
+                var price = parseInt(document.getElementById("Amount").value);
+                var total = document.getElementById("TotalAmount");
+                var topping = document.getElementById("ToppingsAmount");
+                var Toppings = document.getElementById("Toppings");
+                var pizza = document.getElementById("PizzaAmount");
+                console.log(Toppings.value);
+                if (Toppings.value != "") {
+                    total.value = (qty * 30) + (qty * price);
+                    topping.value = qty * 30;
+                    pizza.value=qty*price
+                }
+                else {
+                    pizza.value = qty * price;
+                    total.value = qty * price;
+                    topping.value = 0;
+                }
+            }
+
+            //function ToppingsCalc() {
+            //    var qty = parseInt(document.getElementById("Quantity").value);
+            //    var price = parseInt(document.getElementById("Amount").value);
+            //    var total = document.getElementById("ToppingsAmount");
+            //    var Toppings = document.getElementById("Toppings");
+            //    var pizza = document.getElementById("PizzaAmount");
+            //    if (Toppings.checked == true) {
+            //        total.value =  (qty * 30);
+            //    }
+            //    else {
+            //        total.value = 0;
+            //    }
+            //}
+        </script>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Summary" method="post" name="pizzaForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" name="PizzaId" value="@ViewBag.PizzaId">
+                    <input type="hidden" name="PizzaName" id="PizzaId" value="@ViewBag.PizzaName">
+                    <input type="hidden" name="Amount" id="Amount" value="@ViewBag.Amount">
+
+                    <div class="form-group">
+                        <label asp-for="CustomerName" class="control-label">Customer Name</label>
+                        <input asp-for="CustomerName" class="form-control" />
+                        <span asp-validation-for="CustomerName" class="text-danger"></span>
+                        @Html.ValidationMessageFor(m =>m.CustomerName)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DeliveryAddress" class="control-label">Delivery Address</label>
+                        <input asp-for="DeliveryAddress" class="form-control" />
+                        <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+                        @Html.ValidationMessageFor(m => m.DeliveryAddress )
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MobileNumber" class="control-label">Mobile Number</label>
+                        <input asp-for="MobileNumber" pattern="[789][0-9]{9}" class="form-control" />
+                        <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                        @Html.ValidationMessageFor(m => m.MobileNumber)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Quantity" class="control-label"></label>
+                        <input asp-for="Quantity" type="number" onchange="PriceCalc()" class="form-control" min="1" max="20" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                        @Html.ValidationMessageFor(m => m.Quantity)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Crust" class="control-label"></label>
+                        @Html.DropDownList("Crust", new List<SelectListItem>
+                   {
+                       new SelectListItem{Value="FlatBread",Text="FlatBread"},
+                        new SelectListItem{Value="Sicilian",Text="Sicilian"},
+                         new SelectListItem{Value="Focaccia",Text="Foccacia"},
+                          new SelectListItem{Value="Neapolitan",Text="Neapolitan"},
+                           new SelectListItem{Value="Chicago Deep dish",Text="Chicago Deep Dish"},
+                        }, "Crust", new { @class = "form-control" }
+                        )
+
+
+                        <span asp-validation-for="Crust" class="text-danger"></span>
+                        @Html.ValidationMessageFor(m => m.Crust)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Toppings" class="control-label"></label>
+                        @*<input class="custom-checkbox" onclick="PriceCalc()" type="checkbox" id="Toppings" name="ToppingsSelect" />*@
+                        @Html.DropDownList("Toppings", new List<SelectListItem>
+                        {
+                        new SelectListItem{Value="Black Olives",Text="Black Olives"},
+                       new SelectListItem{Value="Tomatoes",Text="Tomatoes"},
+                       new SelectListItem{Value="Brocolli",Text="Brocolli"},
+                       new SelectListItem{Value="Spinach",Text="Spinach"},
+                       new SelectListItem{Value="Onion",Text="Onion"},
+                        }, "Toppings(Each-Rs.30)", new { @class = "form-control", @id = "Toppings", @onchange = "PriceCalc()" }
+                        )
+
+                        <span asp-validation-for="Toppings" class="text-danger"></span>
+                        @Html.ValidationMessageFor(m => m.Toppings)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PizzaAmount" class="control-label">Pizza Amount</label>
+                        <input asp-for="PizzaAmount" id="PizzaAmount" readonly="readonly" class="form-control" />
+                        <span asp-validation-for="PizzaAmount" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="ToppingsAmount" class="control-label">Toppings Amount</label>
+                        <input asp-for="ToppingsAmount" id="ToppingsAmount" readonly="readonly" class="form-control" />
+                        <span asp-validation-for="ToppingsAmount" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="TotalAmount" class="control-label">Total Amount</label>
+                        <input asp-for="TotalAmount" id="TotalAmount" readonly="readonly" class="form-control" />
+                        <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit" value="Confirm Details" class="btn btn-success" form-method="post" />
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Summary"></a>
+        </div>
+</section>
+    </body>
+</html>

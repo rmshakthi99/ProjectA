@@ -1,0 +1,79 @@
+﻿@model IEnumerable<PizzaMVCProject.Models.PizzaDetail>
+
+@{
+    ViewData["Title"] = "Menu";
+}
+
+<h1>Menu</h1>
+
+<p>
+    <a asp-action="Create"></a>
+</p>
+<p>
+    ORDER YOUR PIZZAS
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaId)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaName)
+               
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pizza)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.VegOrNv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaName)
+            </td>
+            
+            <td>
+                <img src="@Url.Content(@item.Pizza)" alt="Pizza" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VegOrNv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+
+            <td>
+                @Html.ActionLink("OrderPizza", "OrderPizza", new { PizzaId = item.PizzaId,item.PizzaName,item.Amount }) 
+
+                @*<a href="Pizza/OrderPizza?PizzaId=?@item.PizzaId">Order Pizza</a>*@
+                
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
